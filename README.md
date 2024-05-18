@@ -3,6 +3,7 @@
 
 ## APIs
 
+### 箱ひげ図
 ``` Python
 plot_box(df, filename, title="", figsize=(10, 8), x="x", y="y", 
              hue=None, y_const=None, color=["#0066CC", "#FF0000"], 
@@ -21,6 +22,7 @@ plot_box(df, filename, title="", figsize=(10, 8), x="x", y="y",
 - yticks (option)：y軸のメモリのリストを指定（ex. [0,1,2]）
 - is_fitter (option)：実際のメモリの点を描画する時はTrueを指定
 
+### 線グラフ
 ``` Python
 plot_line(df, filename, title="", figsize=(10, 8), x="x", y="y", 
               hue=None, color=["#0066CC", "#FF0000"], 
@@ -40,6 +42,7 @@ plot_line(df, filename, title="", figsize=(10, 8), x="x", y="y",
 - yticks (option)：y軸のメモリのリストを指定（ex. [0,1,2]）
 - zero_start (option)：y軸を0から始めたい時はTrueを指定
 
+### 棒グラフ
 ``` Python
 plot_bar(df, filename, title="", figsize=(10, 8), x="x", y="y", 
              hue=None, y_const=0, color=["#0066CC", "#FF0000"], 
