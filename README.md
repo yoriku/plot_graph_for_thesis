@@ -27,58 +27,78 @@ box(df, filename, figsize=None, kind="|",
     x="x", y="y", hue=None, y_const=None, zero_start=False, 
     color=["#0066CC", "#FF0000"], yticks=None, rotation=0)
 ```
-箱ひげ図を表示  
 
-変数の意味（一部）  
-| 引数       | 必須/任意 | 説明                                                                                                                                                                                                                                                                                                                                                      |
-| ---------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `df`       | 必須      | プロットするデータ<br>Data to be plotted                                                                                                                                                                                                                                                                                                                  |
-| `filename` | 必須      | 保存するファイル名（例: `test`）<br>Filename for saving the plot (e.g., `test`)                                                                                                                                                                                                                                                                           |
-| `kind`     | 任意      | `" \| "` の時に縦向き，`"-"` の時に横向きの図を表示<br>Display vertical plot with `" \| "`, horizontal plot with `"-"`                                                                                                                                                                                                                                    |
-| `x`        | 任意      | x軸の要素<br>Elements for the x-axis                                                                                                                                                                                                                                                                                                                      |
-| `y`        | 任意      | y軸の要素<br>Elements for the y-axis                                                                                                                                                                                                                                                                                                                      |
-| `hue`      | 任意      | 群間を比較するときにその指標となるもの（`target={1,0}` の列がある場合、`target` を指定。例を参照）<br>Indicator for group comparison (e.g., `target` with values `{1,0}`)                                                                                                                                                                                 |
-| `color`    | 任意      | BOXの色。`hue=None` の時は1つの色コードを指定したリストを、`hue` が持つ変数の数分の色コードを指定したリストを渡す。デフォルトでは `hue=2` の場合に使用可能<br>Color of the box. If `hue=None`, provide a list of one color code. Otherwise, provide a list of color codes corresponding to the number of hue variables. By default, it works for `hue=2`. |
-| `y_const`  | 任意      | 基準となる横線を引くときに基準値の数値を指定<br>Specify a numeric value for drawing a reference horizontal line                                                                                                                                                                                                                                           |
-| `yticks`   | 任意      | y軸のメモリのリストを指定（例: `[0,1,2]`）<br>List of y-axis ticks (e.g., `[0,1,2]`)                                                                                                                                                                                                                                                                      |
-| `rotation` | 任意      | X軸のメモリラベルの角度<br>Rotation angle for x-axis tick labels                                                                                                                                                                                                                                                                                          |
+| `df`       | Required      | プロットするデータ<br>Data to be plotted                                                                                                                                                                                                                                                                                                                  |
+| `filename` | Required      | 保存するファイル名（例: `test`）<br>Filename for saving the plot (e.g., `test`)                                                                                                                                                                                                                                                                           |
+| `kind`     | Option      | `" \| "` の時に縦向き，`"-"` の時に横向きの図を表示<br>Display vertical plot with `" \| "`, horizontal plot with `"-"`                                                                                                                                                                                                                                    |
+| `x`        | Option      | x軸の要素<br>Elements for the x-axis                                                                                                                                                                                                                                                                                                                      |
+| `y`        | Option      | y軸の要素<br>Elements for the y-axis                                                                                                                                                                                                                                                                                                                      |
+| `hue`      | Option      | 群間を比較するときにその指標となるもの（`target={1,0}` の列がある場合、`target` を指定。例を参照）<br>Indicator for group comparison (e.g., `target` with values `{1,0}`)                                                                                                                                                                                 |
+| `color`    | Option      | BOXの色。`hue=None` の時は1つの色コードを指定したリストを、`hue` が持つ変数の数分の色コードを指定したリストを渡す。デフォルトでは `hue=2` の場合に使用可能<br>Color of the box. If `hue=None`, provide a list of one color code. Otherwise, provide a list of color codes corresponding to the number of hue variables. By default, it works for `hue=2`. |
+| `y_const`  | Option      | 基準となる横線を引くときに基準値の数値を指定<br>Specify a numeric value for drawing a reference horizontal line                                                                                                                                                                                                                                           |
+| `yticks`   | Option      | y軸のメモリのリストを指定（例: `[0,1,2]`）<br>List of y-axis ticks (e.g., `[0,1,2]`)                                                                                                                                                                                                                                                                      |
+| `rotation` | Option      | X軸のメモリラベルの角度<br>Rotation angle for x-axis tick labels                                                                                                                                                                                                                                                                                          |
 
 
-### 線グラフ
+### 線グラフ Line plot
 ``` Python
-plot_line(df, filename, title="", figsize=(10, 8), x="x", y="y", 
-              hue=None, color=["#0066CC", "#FF0000"], 
-              xticks=None, yticks=None, zero_start=False, is_legend=False)
+line(df, filename, figsize=None, 
+    x="x", y="y", hue=None, y_const=None, zero_start=False, 
+    color=["#0066CC", "#FF0000"], xticks=None, yticks=None, rotation=0)
 ```
-線グラフを表示  
+| `df`       | Required      | プロットするデータ<br>Data to be plotted                                                                                                                                                                                                                                                                                                                  |
+| `filename` | Required      | 保存するファイル名（例: `test`）<br>Filename for saving the plot (e.g., `test`)                                                                                                                                                                                                                                                                           |
+| `x`        | Option      | x軸の要素<br>Elements for the x-axis                                                                                                                                                                                                                                                                                                                      |
+| `y`        | Option      | y軸の要素<br>Elements for the y-axis                                                                                                                                                                                                                                                                                                                      |
+| `hue`      | Option      | 群間を比較するときにその指標となるもの（`target={1,0}` の列がある場合、`target` を指定。例を参照）<br>Indicator for group comparison (e.g., `target` with values `{1,0}`)                                                                                                                                                                                 |
+| `color`    | Option      | BOXの色。`hue=None` の時は1つの色コードを指定したリストを、`hue` が持つ変数の数分の色コードを指定したリストを渡す。デフォルトでは `hue=2` の場合に使用可能<br>Color of the box. If `hue=None`, provide a list of one color code. Otherwise, provide a list of color codes corresponding to the number of hue variables. By default, it works for `hue=2`. |
+| `y_const`  | Option      | 基準となる横線を引くときに基準値の数値を指定<br>Specify a numeric value for drawing a reference horizontal line                                                                                                                                                                                                                                           |
+| `xticks`   | Option      | x軸のメモリのリストを指定（例: `[0,1,2]`）<br>List of x-axis ticks (e.g., `[0,1,2]`)                                                                                                                                                                                                                                                                      |
+| `yticks`   | Option      | y軸のメモリのリストを指定（例: `[0,1,2]`）<br>List of y-axis ticks (e.g., `[0,1,2]`)                                                                                                                                                                                                                                                                      |
+| `rotation` | Option      | X軸のメモリラベルの角度<br>Rotation angle for x-axis tick labels                                                                                                                                                                                                                                                                                          |
 
-変数の意味（一部）  
-- df (Required)：プロットするデータ
-- filename (Required)：保存するファイル名（ex. test.png）
-- x (option)：x軸の要素
-- y (option)：y軸の要素
-- hue (option)：群間を比較するときに，その指標となるもの（target={1,0}の列があるときは，targetを指定．例を参照）
-- color (option)：Lineの色．hueがNoneの時は1つの色のコードを指定したリストを，それ以外はhueが持つ変数の数分の色のコードを指定したリスト指定する．デフォルトではhueの変数が2つの時の場合に使えるようになっている
-- y_const (option)：基準となる横線を引くときに基準値の数値を指定
-- xticks (option)：x軸のメモリのリストを指定（ex. [0,1,2]）
-- yticks (option)：y軸のメモリのリストを指定（ex. [0,1,2]）
-- zero_start (option)：y軸を0から始めたい時はTrueを指定
-
-### 棒グラフ
+### 棒グラフ Bar plot
 ``` Python
-plot_bar(df, filename, title="", figsize=(10, 8), x="x", y="y", 
-             hue=None, y_const=0, color=["#0066CC", "#FF0000"], 
-             yticks=None, is_legend=False, zero_start=False):
+bar(df, filename, figsize=None, 
+    x="x", y="y", hue=None, y_const=None, zero_start=False, 
+    errorbar="sd", kind="|", stacked=False, 
+    color=["#0066CC", "#FF0000"], xticks=None, yticks=None, rotation=0)
 ```
-棒グラフを表示  
+| `df`       | Required      | プロットするデータ<br>Data to be plotted                                                                                                                                                                                                                                                                                                                  |
+| `filename` | Required      | 保存するファイル名（例: `test`）<br>Filename for saving the plot (e.g., `test`)                                                                                                                                                                                                                                                                           |
+| `kind`     | Option      | `" \| "` の時に縦向き，`"-"` の時に横向きの図を表示<br>Display vertical plot with `" \| "`, horizontal plot with `"-"`                                                                                                                                                                                                                                    |
+| `errorbar`     | Option      | エラーバーの表示方法を定義<br>Define how error bars are displayed|
+| `x`        | Option      | x軸の要素<br>Elements for the x-axis                                                                                                                                                                                                                                                                                                                      |
+| `y`        | Option      | y軸の要素<br>Elements for the y-axis                                                                                                                                                                                                                                                                                                                      |
+| `hue`      | Option      | 群間を比較するときにその指標となるもの（`target={1,0}` の列がある場合、`target` を指定。例を参照）<br>Indicator for group comparison (e.g., `target` with values `{1,0}`)                                                                                                                                                                                 |
+| `color`    | Option      | BOXの色。`hue=None` の時は1つの色コードを指定したリストを、`hue` が持つ変数の数分の色コードを指定したリストを渡す。デフォルトでは `hue=2` の場合に使用可能<br>Color of the box. If `hue=None`, provide a list of one color code. Otherwise, provide a list of color codes corresponding to the number of hue variables. By default, it works for `hue=2`. |
+| `y_const`  | Option      | 基準となる横線を引くときに基準値の数値を指定<br>Specify a numeric value for drawing a reference horizontal line                                                                                                                                                                                                                                           |
+| `xticks`   | Option      | x軸のメモリのリストを指定（例: `[0,1,2]`）<br>List of x-axis ticks (e.g., `[0,1,2]`)                                                                                                                                                                                                                                                                      |
+| `yticks`   | Option      | y軸のメモリのリストを指定（例: `[0,1,2]`）<br>List of y-axis ticks (e.g., `[0,1,2]`)                                                                                                                                                                                                                                                                      |
+| `rotation` | Option      | X軸のメモリラベルの角度<br>Rotation angle for x-axis tick labels                                                                                                                                                                                                                                                                                          |
 
-変数の意味（一部）  
-- df (Required)：プロットするデータ
-- filename (Required)：保存するファイル名（ex. test.png）
-- x (option)：x軸の要素
-- y (option)：y軸の要素
-- hue (option)：群間を比較するときに，その指標となるもの（target={1,0}の列があるときは，targetを指定．例を参照）
-- color (option)：BARの色．hueがNoneの時は1つの色のコードを指定したリストを，それ以外はhueが持つ変数の数分の色のコードを指定したリスト指定する．デフォルトではhueの変数が2つの時の場合に使えるようになっている
-- y_const (option)：基準となる横線を引くときに基準値の数値を指定
-- yticks (option)：y軸のメモリのリストを指定（ex. [0,1,2]）
-- zero_start (option)：y軸を0から始めたい時はTrueを指定
+### 混同行列  Confusion matrix
+``` Python
+confusion_matrix(ave, filename, figsize=None, 
+                std=None, classes=None, cmap="Blues", fontsize=25)
+```
+| `ave`       | Required      | SK-LEARNなどで求めた混同行列<br> Confusion matrix obtained by SK-LEARN, etc. |
+| `filename` | Required      | 保存するファイル名（例: `test`）<br>Filename for saving the plot (e.g., `test`) |
+| `std`     | Option      | 混同行列の標準偏差<br>Standard deviation of the confusion matrix  |
+| `classes`     | Option      | クラスの名前<br>Class name |
+
+### スペクトログラム Spectrogram
+``` Python
+spectrogram(df, filename, figsize=None, 
+            cmap="jet", xticks=None, yticks=None, rotation=0)
+```
+
+## 図以外のAPIs Util APIs
+``` Python
+convert(df, hue=None, index2x=False)
+```
+
+
+``` Python
+get_color(name: Literal["BR", "BG", "KW", "C3", "C5"] = "BR")
+```
