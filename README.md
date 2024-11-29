@@ -27,7 +27,7 @@ box(df, filename, figsize=None, kind="|",
     x="x", y="y", hue=None, y_const=None, zero_start=False, 
     color=["#0066CC", "#FF0000"], yticks=None, rotation=0)
 ```
-
+|--|--|--|
 | `df`       | Required      | プロットするデータ<br>Data to be plotted                                                                                                                                                                                                                                                                                                                  |
 | `filename` | Required      | 保存するファイル名（例: `test`）<br>Filename for saving the plot (e.g., `test`)                                                                                                                                                                                                                                                                           |
 | `kind`     | Option      | `" \| "` の時に縦向き，`"-"` の時に横向きの図を表示<br>Display vertical plot with `" \| "`, horizontal plot with `"-"`                                                                                                                                                                                                                                    |
@@ -46,6 +46,7 @@ line(df, filename, figsize=None,
     x="x", y="y", hue=None, y_const=None, zero_start=False, 
     color=["#0066CC", "#FF0000"], xticks=None, yticks=None, rotation=0)
 ```
+|--|--|--|
 | `df`       | Required      | プロットするデータ<br>Data to be plotted                                                                                                                                                                                                                                                                                                                  |
 | `filename` | Required      | 保存するファイル名（例: `test`）<br>Filename for saving the plot (e.g., `test`)                                                                                                                                                                                                                                                                           |
 | `x`        | Option      | x軸の要素<br>Elements for the x-axis                                                                                                                                                                                                                                                                                                                      |
@@ -64,6 +65,7 @@ bar(df, filename, figsize=None,
     errorbar="sd", kind="|", stacked=False, 
     color=["#0066CC", "#FF0000"], xticks=None, yticks=None, rotation=0)
 ```
+|--|--|--|
 | `df`       | Required      | プロットするデータ<br>Data to be plotted                                                                                                                                                                                                                                                                                                                  |
 | `filename` | Required      | 保存するファイル名（例: `test`）<br>Filename for saving the plot (e.g., `test`)                                                                                                                                                                                                                                                                           |
 | `kind`     | Option      | `" \| "` の時に縦向き，`"-"` の時に横向きの図を表示<br>Display vertical plot with `" \| "`, horizontal plot with `"-"`                                                                                                                                                                                                                                    |
@@ -82,6 +84,7 @@ bar(df, filename, figsize=None,
 confusion_matrix(ave, filename, figsize=None, 
                 std=None, classes=None, cmap="Blues", fontsize=25)
 ```
+|--|--|--|
 | `ave`       | Required      | SK-LEARNなどで求めた混同行列<br> Confusion matrix obtained by SK-LEARN, etc. |
 | `filename` | Required      | 保存するファイル名（例: `test`）<br>Filename for saving the plot (e.g., `test`) |
 | `std`     | Option      | 混同行列の標準偏差<br>Standard deviation of the confusion matrix  |
