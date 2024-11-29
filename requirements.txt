@@ -1,0 +1,6 @@
+matplotlib
+numpy==1.26
+seaborn
+pandas
+opencv-python
+scikit-learn
