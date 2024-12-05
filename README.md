@@ -19,6 +19,9 @@ color = plot.get_color("KW")
 plot.box(df, "test", hue="target", color=color)
 ```
 
+irisデータセットを使用した時の例を`test.py`ファイルに示しています．  
+An example when using the iris dataset is shown in the `test.py` file.  
+
 ## サポートされる図一覧 Supported figures
 
 ### 箱ひげ図 Box plot
@@ -39,6 +42,10 @@ box(df, filename, figsize=None, kind="|",
 | `y_const`  | Option   | 基準となる横線を引くときに基準値の数値を指定<br>Specify a numeric value for drawing a reference horizontal line                                                                                                                                                                                                                                           |
 | `yticks`   | Option   | y軸のメモリのリストを指定（例: `[0,1,2]`）<br>List of y-axis ticks (e.g., `[0,1,2]`)                                                                                                                                                                                                                                                                      |
 | `rotation` | Option   | X軸のメモリラベルの角度<br>Rotation angle for x-axis tick labels                                                                                                                                                                                                                                                                                          |
+
+#### Exaple figures
+![Box1](pic/box.png "縦向きBox Plot")
+![Box2](pic/box-.png "横向きBox Plot")
 
 
 ### 線グラフ Line plot
@@ -81,6 +88,9 @@ bar(df, filename, figsize=None,
 | `xticks`   | Option   | x軸のメモリのリストを指定（例: `[0,1,2]`）<br>List of x-axis ticks (e.g., `[0,1,2]`)                                                                                                                                                                                                                                                                      |
 | `yticks`   | Option   | y軸のメモリのリストを指定（例: `[0,1,2]`）<br>List of y-axis ticks (e.g., `[0,1,2]`)                                                                                                                                                                                                                                                                      |
 | `rotation` | Option   | X軸のメモリラベルの角度<br>Rotation angle for x-axis tick labels                                                                                                                                                                                                                                                                                          |
+
+#### Exaple figures
+![Bar1](pic/bar.png "縦向きBar Plot")
 
 ### 混同行列  Confusion matrix
 ``` Python

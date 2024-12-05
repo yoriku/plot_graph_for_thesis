@@ -259,6 +259,8 @@ class PLOT:
         else:
             if hue is not None:
                 df = pd.melt(df, id_vars=hue, var_name="x", value_name="y")
+            else:
+                df = pd.melt(df, var_name="x", value_name="y")
         return df
     
     def get_color(self, name: Literal["BR", "BG", "KW", "C3", "C5"] = "BR"):
