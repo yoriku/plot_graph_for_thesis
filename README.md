@@ -104,6 +104,9 @@ confusion_matrix(ave, filename, figsize=None,
 | `std`      | Option   | 混同行列の標準偏差<br>Standard deviation of the confusion matrix                |
 | `classes`  | Option   | クラスの名前<br>Class name                                                      |
 
+#### Exaple figures
+![CM](pic/cm.png "Confusion Matrix")
+
 ### スペクトログラム Spectrogram
 ``` Python
 spectrogram(df, filename, figsize=None, 
