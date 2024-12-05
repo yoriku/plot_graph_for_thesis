@@ -9,6 +9,8 @@ A suite of tools that make it easy to create diagrams at a level that can be put
 ``` Python
 # インスタンス化 Instantiate
 plot = PLOT(figsize=(10, 8), font_size=20, is_times_new_roman=False, save_mode=["png", "pdf"])
+# is_times_new_roman : フォントをTimes New Romanにするか
+# save_mode : saveするファイルの拡張子のリスト
 
 # 必要に応じてデータフレームを変形 Transform data frames as required.
 df = plot.convert(df, hue="target")
