@@ -57,7 +57,7 @@ class PLOT:
     def save(self, fig, filename):
         for mode in self.save_mode:
             if mode =="pdf":
-                fig.savefig(f"{filename}.{mode}", transparent=False)
+                fig.savefig(f"{filename}.{mode}", transparent=True)
             else:
                 fig.savefig(f"{filename}.{mode}")
         return fig
@@ -203,6 +203,7 @@ class PLOT:
                         verticalalignment="center", fontsize=fontsize,
                         color="white" if cm[i, j] > thresh else "black")
 
+        sns.despine(left=True, bottom=True)
         plt.tight_layout()
         plt.ylabel('True label')
         plt.xlabel('Predicted label')
