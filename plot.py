@@ -215,7 +215,7 @@ class PLOT:
             tick.set_rotation(rotation)
         sns.despine()
 
-        if stats is not None and hue is not None:
+        if stats is not None and hue is not None and kind=="|":
             stat = Stat(**stats)
             annot_text = stat.calc(df, x, y, hue)
 
@@ -289,7 +289,7 @@ class PLOT:
             tick.set_rotation(rotation)
         sns.despine()
 
-        if stats is not None and hue is not None:
+        if stats is not None and hue is not None and kind=="|":
             stat = Stat(**stats)
             annot_text = stat.calc(df, x, y, hue)
 

@@ -46,6 +46,10 @@ box(df, filename, figsize=None, kind="|",
 | `rotation` | Option   | X軸のメモリラベルの角度<br>Rotation angle for x-axis tick labels                                                                                                                                                                                                                                                                                          |
 
 #### Exaple figures
+~~~ Python
+plot.box(df, "pic/box", hue="variety", color=color, stats={"stat_name": "welch", "stat_mark": None}, figsize=(20,8))
+plot.box(df, "pic/box-", hue="variety", color=color, kind="-")
+~~~
 ![Box1](pic/box.png "縦向きBox Plot")
 ![Box2](pic/box-.png "横向きBox Plot")
 
@@ -92,6 +96,9 @@ bar(df, filename, figsize=None,
 | `rotation` | Option   | X軸のメモリラベルの角度<br>Rotation angle for x-axis tick labels                                                                                                                                                                                                                                                                                          |
 
 #### Exaple figures
+~~~ Python
+plot.bar(df, "pic/bar", hue="variety", color=color)
+~~~
 ![Bar1](pic/bar.png "縦向きBar Plot")
 
 ### 混同行列  Confusion matrix

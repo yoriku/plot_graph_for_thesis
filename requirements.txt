@@ -4,3 +4,5 @@ seaborn
 pandas
 opencv-python
 scikit-learn
+scipy
+statsmodels
