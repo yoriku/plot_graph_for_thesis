@@ -44,8 +44,8 @@ box(df, filename, figsize=None, kind="|",
 | `y_const`  | Option   | 基準となる横線を引くときに基準値の数値を指定<br>Specify a numeric value for drawing a reference horizontal line                                                                                                                                                                                                                                           |
 | `yticks`   | Option   | y軸のメモリのリストを指定（例: `[0,1,2]`）<br>List of y-axis ticks (e.g., `[0,1,2]`)                                                                                                                                                                                                                                                                      |
 | `rotation` | Option   | X軸のメモリラベルの角度<br>Rotation angle for x-axis tick labels |
-|`stats`|Option  |`stat_name`は検定の名前`brunnermunzel`と`welch`をサポート  
-`stat_mark`は星の形状の定義．デフォルトは`*`であり，Noneを指定するとp値がそのまま表示される  
+|`stats`|Option  |`stat_name`は検定の名前`brunnermunzel`と`welch`をサポート<br>
+`stat_mark`は星の形状の定義．デフォルトは`*`であり，Noneを指定するとp値がそのまま表示される<br>
 `adjust_name`は多重比較の方法を定義，有名どころでは，`bonferroni`，`holm`，`fdr_bh`などが可能|
 
 
@@ -99,8 +99,8 @@ bar(df, filename, figsize=None,
 | `xticks`   | Option   | x軸のメモリのリストを指定（例: `[0,1,2]`）<br>List of x-axis ticks (e.g., `[0,1,2]`)                                                                                                                                                                                                                                                                      |
 | `yticks`   | Option   | y軸のメモリのリストを指定（例: `[0,1,2]`）<br>List of y-axis ticks (e.g., `[0,1,2]`)                                                                                                                                                                                                                                                                      |
 | `rotation` | Option   | X軸のメモリラベルの角度<br>Rotation angle for x-axis tick labels  |
-|`stats`|Option  |`stat_name`は検定の名前`brunnermunzel`と`welch`をサポート  
-`stat_mark`は星の形状の定義．デフォルトは`*`であり，Noneを指定するとp値がそのまま表示される  
+|`stats`|Option  |`stat_name`は検定の名前`brunnermunzel`と`welch`をサポート<br>
+`stat_mark`は星の形状の定義．デフォルトは`*`であり，Noneを指定するとp値がそのまま表示される<br>
 `adjust_name`は多重比較の方法を定義，有名どころでは，`bonferroni`，`holm`，`fdr_bh`などが可能|
 
 #### Exaple figures
