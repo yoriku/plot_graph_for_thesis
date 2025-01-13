@@ -1,3 +1,4 @@
+import itertools
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -5,9 +6,117 @@ import numpy as np
 import pandas as pd
 import os
 from typing import Literal
+from scipy.stats import ttest_ind, brunnermunzel
+from statsmodels.stats.multitest import multipletests
+
+class Annot:
+    def __init__(self, df, y="y", fs=20):
+        self.max_h = np.max(df[y].values)
+
+        self.fs = fs
+        self.fspx = fs * 4 / 3
+        self.origin_ax_min_y, self.origin_ax_max_y = plt.gca().get_ylim()
+        dpp = plt.rcParams["figure.dpi"] / 96
+        p_miny, p_maxy = plt.gca().get_window_extent().get_points()[:, 1]
+        self.p_miny, self.p_maxy = p_miny / dpp, p_maxy / dpp
+    def get(self, level):
+        level += 0.5
+        font_height = self.fspx * (self.origin_ax_max_y - self.origin_ax_min_y) / (self.p_maxy - self.p_miny)
+        return font_height * level
+    def plot(self, ax, points):
+        for s,e,l,text in points:
+            h = self.max_h + self.get(l)
+            ax.plot([s,e], [h, h], color="black")
+            ax.text((s+e)/2, h + self.get(0), text, color="black", horizontalalignment='center', fontsize=self.fs)
+        return ax
+
+
+class Stat:
+    def __init__(self, stat_name="brunnermunzel", adjust_name=None, stat_mark="*"):
+        self.stat_name = stat_name
+        self.adjust_name = adjust_name
+        self.stat_mark = stat_mark
+
+    def get_unigue(self, df, i):
+        i, indexes = np.unique(df[i].values, return_index=True)
+        indexes = np.argsort(indexes)
+        return i[indexes]
+    
+    def exe_stat(self, x1 ,x2):
+        if self.stat_name == "welch":
+            p = ttest_ind(x1, x2, equal_var=False, nan_policy="omit")[1]
+        elif self.stat_name == "brunnermunzel":
+            p = brunnermunzel(x1, x2, nan_policy="omit", distribution="normal")[1]
+        else:
+            raise ValueError("stat mode only welch or brunnermunzel")
+        return p
+    
+    def exe_adjust(self, l_p):
+        if self.adjust_name is None:
+            l_p_mark = []
+            if self.stat_mark is None:
+                l_p_mark = [f"p={p:.3f}" for p in l_p]
+            else:
+                for p in l_p:
+                    l_p_mark.append(lookup_p(p, self.stat_mark))
+            return l_p, l_p_mark
+        else:
+            l_p = multipletests(l_p, method=self.adjust_name)[1]
+            if self.stat_mark is None:
+                l_p_mark = [f"p={p:.3f}" for p in l_p]
+            else:
+                l_p_mark = []
+                for p in l_p:
+                    l_p_mark.append(lookup_p(p, self.stat_mark))
+            return l_p, l_p_mark
+
+    def calc(self, df, x, y, hue, width=0.8):
+        xs = self.get_unigue(df, x)
+        hues = self.get_unigue(df, hue)
+        n_hue = len(hues)
+        l_hues = np.arange(n_hue)
+        c_hues = list(itertools.combinations(l_hues, 2))
+
+        l_p = []
+
+        for i, name_x in enumerate(xs):
+            for i1, i2 in c_hues:
+                df_tmp = df[df[x] == name_x].copy()
+                x1, x2 = df_tmp[df_tmp[hue] == hues[i1]][y].values, df_tmp[df_tmp[hue] == hues[i2]][y].values
+                p = self.exe_stat(x1,x2)
+                l_p.append(p)
+
+        l_p, l_p_mark = self.exe_adjust(l_p)
+
+        annot_stat = []
+        i_mark = 0
+        for i, name_x in enumerate(xs):
+            for i1, i2 in c_hues:
+                gap = width / n_hue
+                start = 0
+                if n_hue%2 == 0:
+                    start = width/4
+                start -= gap*(n_hue//2)
+                s,e = (start+i) + gap*i1, (start+i) + gap*i2  
+                l = i2-i1
+                annot_stat.append((s+0.01, e-0.01, l*2, l_p_mark[i_mark]))
+                i_mark +=1
+        
+        return annot_stat
+        
+
+def lookup_p(p, mark):
+    if p < 0.001:
+        return mark+mark+mark
+    if p < 0.01:
+        return mark+mark
+    if p < 0.05:
+        return mark
+    return ""
 
 class PLOT:
     def __init__(self, figsize=(10, 8), font_size=20, is_times_new_roman=False, save_mode=["png", "pdf"]):
+        self.font_size = font_size
         for _ in range(2):
             self.fig, self.ax = self.update_fig(figsize)
             self.figsize = figsize
@@ -51,7 +160,7 @@ class PLOT:
             y_min, y_max = ax.get_ylim()
             if zero_start:
                 y_min = 0
-            ax.set_ylim(y_min, y_max)
+                ax.set_ylim(y_min, y_max)
         return ax
     
     def save(self, fig, filename):
@@ -65,7 +174,8 @@ class PLOT:
     
     def box(self, df, filename, figsize=None, kind="|", 
             x="x", y="y", hue=None, y_const=None, zero_start=False, 
-            color=["#0066CC", "#FF0000"], yticks=None, rotation=0):
+            color=["#0066CC", "#FF0000"], yticks=None, rotation=0,
+            stats={"stat_name": "brunnermunzel", "adjust_name": None, "stat_mark": "*"}):
         if figsize is not None and self.figsize != figsize:
             self.fig, self.ax = self.delete_fig().update_fig(figsize)
         fig, ax = self.fig, self.ax
@@ -104,6 +214,14 @@ class PLOT:
         for tick in ax.get_xticklabels():
             tick.set_rotation(rotation)
         sns.despine()
+
+        if stats is not None and hue is not None:
+            stat = Stat(**stats)
+            annot_text = stat.calc(df, x, y, hue)
+
+            annot = Annot(df, y=y, fs=self.font_size)
+            ax = annot.plot(ax, annot_text)
+
         plt.tight_layout(pad=1.1)
 
         fig = self.save(fig, filename)
@@ -112,7 +230,7 @@ class PLOT:
     
     def line(self, df, filename, figsize=None, 
             x="x", y="y", hue=None, y_const=None, zero_start=False, 
-            color=["#0066CC", "#FF0000"], xticks=None, yticks=None, rotation=0):
+            errorbar="sd", color=["#0066CC", "#FF0000"], xticks=None, yticks=None, rotation=0):
         if figsize is not None and self.figsize != figsize:
             self.fig, self.ax = self.delete_fig().update_fig(figsize)
         fig, ax = self.fig, self.ax
@@ -121,7 +239,7 @@ class PLOT:
             ax.axhline(y=y_const, c="b", linewidth=3)
 
         sns.set_palette(color)
-        sns.lineplot(x=x, y=y, data=df, hue=hue, ax=ax, linewidth=3)
+        sns.lineplot(x=x, y=y, data=df, hue=hue, ax=ax, linewidth=3, errorbar=errorbar)
 
         ax = self.range(ax,xticks=xticks, yticks=yticks, zero_start=zero_start)
 
@@ -141,7 +259,8 @@ class PLOT:
     def bar(self, df, filename, figsize=None, 
             x="x", y="y", hue=None, y_const=None, zero_start=False, 
             errorbar="sd", kind="|", stacked=False, 
-            color=["#0066CC", "#FF0000"], xticks=None, yticks=None, rotation=0):
+            color=["#0066CC", "#FF0000"], xticks=None, yticks=None, rotation=0,
+            stats={"stat_name": "brunnermunzel", "adjust_name": None, "stat_mark": "*"}):
 
         if figsize is not None and self.figsize != figsize:
             self.fig, self.ax = self.delete_fig().update_fig(figsize)
@@ -169,6 +288,14 @@ class PLOT:
         for tick in ax.get_xticklabels():
             tick.set_rotation(rotation)
         sns.despine()
+
+        if stats is not None and hue is not None:
+            stat = Stat(**stats)
+            annot_text = stat.calc(df, x, y, hue)
+
+            annot = Annot(df, y=y, fs=self.font_size)
+            ax = annot.plot(ax, annot_text)
+
         plt.tight_layout(pad=1.1)
 
         fig = self.save(fig, filename)
