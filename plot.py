@@ -55,7 +55,7 @@ class Stat:
         if self.adjust_name is None:
             l_p_mark = []
             if self.stat_mark is None:
-                l_p_mark = [f"p={p:.3f}" for p in l_p]
+                l_p_mark = [f"p={p:.3f}" if p >= 0.001 else f"p<0.001" for p in l_p]
             else:
                 for p in l_p:
                     l_p_mark.append(lookup_p(p, self.stat_mark))
@@ -399,10 +399,6 @@ class PLOT:
         C5 = ["#010066", "#19B900", "#333333", "#ff7f00", "#e41a1c"]
         return eval(name)
 
-
-
-
-
 if __name__ == "__main__":
     df = pd.read_csv("https://raw.githubusercontent.com/yoriku/tmp_csv/main/kadai.csv")
 
@@ -412,4 +408,3 @@ if __name__ == "__main__":
     color = plot.get_color("C3")
 
     plot.bar(df, "test", hue="target", color=color)
-
