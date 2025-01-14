@@ -5,8 +5,9 @@ A suite of tools that make it easy to create diagrams at a level that can be put
 こんな感じの図を次のプログラムで表示することができます．  
 ~~~ Python
 plot = PLOT(save_mode=["png"], figsize=(12,8))
-df = plot.convert(df, hue="target")
-plot.box(df, "pic/adjust", hue="target", yticks=[-5,0,5,10])
+df = plot.convert(df, hue="target", x="features", y="number")
+color = plot.get_color("pastel")
+plot.box(df, "pic/adjust", x="features", y="number", hue="target", yticks=[-5,0,5], color=color)
 ~~~
 ![adjust](pic/adjust.png "例")
 
