@@ -37,7 +37,8 @@ An example when using the iris dataset is shown in the `test.py` file.
 ``` Python
 box(df, filename, figsize=None, kind="|", 
     x="x", y="y", hue=None, y_const=None, zero_start=False, 
-    color=["#0066CC", "#FF0000"], yticks=None, rotation=0)
+    color=["#0066CC", "#FF0000"], yticks=None, rotation=0,
+    stats={"stat_name": "brunnermunzel", "adjust_name": None, "stat_mark": "*"})
 ```
 |            |          | 説明                                                                                                                                                                                                                                                                                                                                                      |
 | ---------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -88,7 +89,8 @@ line(df, filename, figsize=None,
 bar(df, filename, figsize=None, 
     x="x", y="y", hue=None, y_const=None, zero_start=False, 
     errorbar="sd", kind="|", stacked=False, 
-    color=["#0066CC", "#FF0000"], xticks=None, yticks=None, rotation=0)
+    color=["#0066CC", "#FF0000"], xticks=None, yticks=None, rotation=0,
+    stats={"stat_name": "brunnermunzel", "adjust_name": None, "stat_mark": "*"})
 ```
 |            |          | 説明                                                                                                                                                                                                                                                                                                                                                      |
 | ---------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
