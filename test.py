@@ -11,8 +11,9 @@ if __name__ == "__main__":
     plot = PLOT(save_mode=["png"], figsize=(12,8))
 
     df = plot.convert(df, hue="target")
+    color = ["#FFB3BA", "#FFDFBA", "#FFFFBA", "#BAFFC9"]
 
-    plot.box(df, "pic/adjust", hue="target", yticks=[-5,0,5,10])
+    plot.box(df, "pic/adjust", hue="target", yticks=[-5,0,5,10], color=color)
 
     # iris dataset
     df = pd.read_csv("https://gist.githubusercontent.com/netj/8836201/raw/6f9306ad21398ea43cba4f7d537619d0e07d5ae3/iris.csv")

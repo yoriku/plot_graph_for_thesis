@@ -38,14 +38,7 @@ class Stat:
         self.stat_name = stat_name
         self.adjust_name = adjust_name
         self.stat_mark = stat_mark
-
-    def get_unigue(self, df, i, sort=True):
-        i, indexes = np.unique(df[i].values, return_index=True)
-        indexes = np.argsort(indexes)
-        if sort:
-            return i[indexes]
-        else:
-            return i
+        
     def sort(self, l_hues):
         combinations = list(itertools.combinations(l_hues, 2))
         sorted_combinations = sorted(combinations, key=lambda pair: abs(pair[0] - pair[1]))
@@ -102,14 +95,13 @@ class Stat:
         return adjusted_points
 
     def calc(self, df, x, y, hue, width=0.8):
-        xs = self.get_unigue(df, x, sort=False)
-        hues = self.get_unigue(df, hue, sort=False)
+        xs = get_unigue(df, x, sort=True)
+        hues = get_unigue(df, hue, sort=True)
         n_hue = len(hues)
         l_hues = np.arange(n_hue)
         c_hues = self.sort(l_hues)
 
         l_p = []
-
         for i, name_x in enumerate(xs):
             for i1, i2 in c_hues:
                 df_tmp = df[df[x] == name_x].copy()
@@ -134,7 +126,16 @@ class Stat:
                 i_mark +=1
         
         return self.adjust_level(annot_stat)
-        
+
+def get_unigue(df, i, sort=True):
+    i, indexes = np.unique(df[i].values, return_index=True)
+    i = np.array([str(s_i) for s_i in i])
+    indexes = np.argsort(indexes)
+    if sort:
+        return i[indexes]
+    else:
+        return i
+
 
 def lookup_p(p, mark):
     if p < 0.001:
@@ -221,11 +222,20 @@ class PLOT:
         if y_const is not None:
             ax.axhline(y=y_const, c="b", linewidth=3)
         
+        xs = get_unigue(df, x, sort=True)
+
+        hue_order = None
+        if hue is not None:
+            hue_order = get_unigue(df, hue, sort=True)
+        df[x] = df[x].astype(str)
+        df[hue] = df[hue].astype(str)
+        
         if kind !="|":
             x, y = y, x
+            xs = None
 
         sns.set_palette(color)
-        sns.boxplot(x=x, y=y, data=df, hue=hue, ax=ax, linewidth=2, width=0.8,
+        sns.boxplot(x=x, y=y, data=df, hue=hue, order=xs, hue_order=hue_order, ax=ax, linewidth=2, width=0.8, 
                         showmeans=True,
                         flierprops=dict(marker='o',
                                         markersize=10,
@@ -301,14 +311,23 @@ class PLOT:
         if y_const is not None:
             ax.axhline(y=y_const, c="b", linewidth=3)
 
+        xs = get_unigue(df, x, sort=True)
+
+        hue_order = None
+        if hue is not None:
+            hue_order = get_unigue(df, hue, sort=True)
+        df[x] = df[x].astype(str)
+        df[hue] = df[hue].astype(str)
+        
         if kind !="|":
             x, y = y, x
+            xs = None
         
         sns.set_palette(color)
         if stacked:
             df.plot(kind="bar", stacked=stacked, ax=ax, color=color)
         else:
-            sns.barplot(x=x, y=y, data=df, hue=hue, ax=ax, errorbar=errorbar, capsize=0.05)
+            sns.barplot(x=x, y=y, data=df, hue=hue, ax=ax, order=xs, hue_order=hue_order, errorbar=errorbar, capsize=0.05)
 
         ax = self.range(ax,xticks=xticks, yticks=yticks, zero_start=zero_start)
 
