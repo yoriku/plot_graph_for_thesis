@@ -12,22 +12,24 @@ from statsmodels.stats.multitest import multipletests
 class Annot:
     def __init__(self, df, y="y", fs=20):
         self.max_h = np.max(df[y].values)
-
         self.fs = fs
         self.fspx = fs * 4 / 3
         self.origin_ax_min_y, self.origin_ax_max_y = plt.gca().get_ylim()
         dpp = plt.rcParams["figure.dpi"] / 96
         p_miny, p_maxy = plt.gca().get_window_extent().get_points()[:, 1]
         self.p_miny, self.p_maxy = p_miny / dpp, p_maxy / dpp
+
     def get(self, level):
         level += 0.5
         font_height = self.fspx * (self.origin_ax_max_y - self.origin_ax_min_y) / (self.p_maxy - self.p_miny)
         return font_height * level
+    
     def plot(self, ax, points):
         for s,e,l,text in points:
-            h = self.max_h + self.get(l)
-            ax.plot([s,e], [h, h], color="black")
-            ax.text((s+e)/2, h + self.get(0), text, color="black", horizontalalignment='center', fontsize=self.fs)
+            if text != "":
+                h = self.max_h + self.get(l)
+                ax.plot([s,e], [h, h], color="black")
+                ax.text((s+e)/2, h + self.get(0), text, color="black", horizontalalignment='center', fontsize=self.fs)
         return ax
 
 
@@ -37,10 +39,17 @@ class Stat:
         self.adjust_name = adjust_name
         self.stat_mark = stat_mark
 
-    def get_unigue(self, df, i):
+    def get_unigue(self, df, i, sort=True):
         i, indexes = np.unique(df[i].values, return_index=True)
         indexes = np.argsort(indexes)
-        return i[indexes]
+        if sort:
+            return i[indexes]
+        else:
+            return i
+    def sort(self, l_hues):
+        combinations = list(itertools.combinations(l_hues, 2))
+        sorted_combinations = sorted(combinations, key=lambda pair: abs(pair[0] - pair[1]))
+        return sorted_combinations
     
     def exe_stat(self, x1 ,x2):
         if self.stat_name == "welch":
@@ -63,21 +72,46 @@ class Stat:
         else:
             l_p = multipletests(l_p, method=self.adjust_name)[1]
             if self.stat_mark is None:
-                l_p_mark = [f"p={p:.3f}" for p in l_p]
+                l_p_mark = [f"p={p:.3f}" if p >= 0.001 else f"p<0.001" for p in l_p]
             else:
                 l_p_mark = []
                 for p in l_p:
                     l_p_mark.append(lookup_p(p, self.stat_mark))
             return l_p, l_p_mark
+    
+    def adjust_level(self, points):
+        col_level = 0
+        th = 0
+        prev_level, prev_end_point = -100, -100
+        adjusted_points = []
+        for s,e,l,text in points:
+            if th+0.5 < s:
+                col_level = 0
+                prev_level, prev_end_point = -100, -100
+                th += 1
+
+            if text != "" and l>2:
+
+                if prev_level == l and prev_end_point > s:
+                    col_level += 2
+                prev_end_point = e
+                prev_level = l
+                l += col_level
+
+            adjusted_points.append((s,e,l,text))
+        return adjusted_points
 
     def calc(self, df, x, y, hue, width=0.8):
-        xs = self.get_unigue(df, x)
-        hues = self.get_unigue(df, hue)
+        xs = self.get_unigue(df, x, sort=False)
+        hues = self.get_unigue(df, hue, sort=False)
         n_hue = len(hues)
         l_hues = np.arange(n_hue)
-        c_hues = list(itertools.combinations(l_hues, 2))
+        c_hues = self.sort(l_hues)
 
         l_p = []
+        print(df[hue])
+        print(hues)
+        print(xs)
 
         for i, name_x in enumerate(xs):
             for i1, i2 in c_hues:
@@ -95,14 +129,14 @@ class Stat:
                 gap = width / n_hue
                 start = 0
                 if n_hue%2 == 0:
-                    start = width/4
+                    start = width/(n_hue*2)
                 start -= gap*(n_hue//2)
                 s,e = (start+i) + gap*i1, (start+i) + gap*i2  
                 l = i2-i1
                 annot_stat.append((s+0.01, e-0.01, l*2, l_p_mark[i_mark]))
                 i_mark +=1
         
-        return annot_stat
+        return self.adjust_level(annot_stat)
         
 
 def lookup_p(p, mark):
