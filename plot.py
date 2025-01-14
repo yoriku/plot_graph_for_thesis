@@ -260,7 +260,7 @@ class PLOT:
             stat = Stat(**stats)
             annot_text = stat.calc(df, x, y, hue)
 
-            annot = Annot(df, y=y, fs=self.font_size)
+            annot = Annot(df, y=y, fs=min(self.font_size,20))
             ax = annot.plot(ax, annot_text)
 
         plt.tight_layout(pad=1.1)
@@ -343,7 +343,7 @@ class PLOT:
             stat = Stat(**stats)
             annot_text = stat.calc(df, x, y, hue)
 
-            annot = Annot(df, y=y, fs=self.font_size)
+            annot = Annot(df, y=y, fs=min(self.font_size,20))
             ax = annot.plot(ax, annot_text)
 
         plt.tight_layout(pad=1.1)

@@ -8,7 +8,7 @@ if __name__ == "__main__":
     df = pd.DataFrame(X)
     df["target"] = y
 
-    plot = PLOT(save_mode=["png"], figsize=(12,8))
+    plot = PLOT(save_mode=["png"], figsize=(12,8), font_size=30)
 
     df = plot.convert(df, hue="target", x="features", y="number")
     color = plot.get_color("pastel")
