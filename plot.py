@@ -172,6 +172,7 @@ class PLOT:
             plt.rcParams["legend.edgecolor"] = 'black'  # edgeの色を変更
 
     def update_fig(self, figsize):
+        self.figsize = figsize
         fig = plt.figure(figsize=figsize, dpi=100)
         ax = fig.add_subplot(111)
         return fig, ax
@@ -390,6 +391,7 @@ class PLOT:
         fig = self.save(fig, filename)
 
         plt.cla()
+        self.fig, self.ax = self.delete_fig().update_fig(self.figsize)
     
     def spectrogram(self, df, filename, figsize=None, 
                     cmap="jet", xticks=None, yticks=None, rotation=0):
@@ -416,7 +418,6 @@ class PLOT:
 
         plt.cla()
 
-
     def movie2frame(video_path, frame_num=0, result_path="cut.png"):
         import cv2
         cap = cv2.VideoCapture(video_path)
@@ -431,7 +432,7 @@ class PLOT:
     
     def convert(self, df, x="x", y="y", hue=None, index2x=False):
         if index2x:
-            df["x"] = df.index
+            df[x] = df.index
             if hue is not None:
                 df = pd.melt(df, id_vars=x, var_name="hue", value_name=y)
         else:
@@ -441,13 +442,15 @@ class PLOT:
                 df = pd.melt(df, var_name=x, value_name=y)
         return df
     
-    def get_color(self, name: Literal["BR", "BG", "KW", "C3", "C5", "pastel"] = "BR"):
+    def get_color(self, name: Literal["BR", "BG", "KW", "C3", "C5", "pastel", "vivid"] = "BR"):
         BR = ["#0066CC", "#FF0000"]
-        BG = ["#010066", "#19B900"]
+        BG = ["#1a198a", "#19B900"]
         KW = ["#333333", "#AAAAAA"]
         C3 = ["#ff7f00", "#19B900", "#0066CC"]
-        C5 = ["#010066", "#19B900", "#333333", "#ff7f00", "#e41a1c"]
+        C5 = ["#1a198a", "#19B900", "#333333", "#ff7f00", "#e41a1c"]
         pastel = ["#ff7f7f", "#ff7fff", "#7f7fff", "#7fffff", "#7fff7f", "#ffff7f"]
+        vivid = ["#ff2d2d", "#ff2dff", "#2d2dff", "#2dffff", "#2dff2d", "#ffff2d"]
+
         return eval(name)
 
 if __name__ == "__main__":

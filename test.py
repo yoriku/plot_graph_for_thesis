@@ -33,3 +33,22 @@ if __name__ == "__main__":
     classes = np.array([0,1])
     plot.confusion_matrix(ave, "pic/cm", std=std, classes=classes)
 
+    X, y= make_classification(n_samples=100, n_features=3, n_informative=3, n_redundant=0, n_clusters_per_class=1, n_classes=6, random_state=0)
+    df = pd.DataFrame(X)
+    df["target"] = y
+
+    
+
+    for name_color in ["BR", "BG", "KW", "C3", "C5", "pastel", "vivid"]:
+        color = plot.get_color(name_color)
+        df_ = plot.convert(df[df['target'].isin([i for i in range(len(color))])].copy(), 
+                           x="features", y="number", hue="target")
+        plot.box(df_, f"pic/{name_color}", x="features", y="number", hue="target", color=color, stats=None)
+
+        print(f"### {name_color}")
+        print("~~~ Python")
+        print(f'plot.bar(df, "pic/{name_color}", color=color)')
+        print("~~~")
+        print(f'![{name_color}](pic/{name_color}.png "{name_color}")')
+
+

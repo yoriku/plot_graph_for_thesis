@@ -137,11 +137,58 @@ spectrogram(df, filename, figsize=None,
 ```
 
 ## 図以外のAPIs Util APIs
+### データの成型
 ``` Python
-convert(df, hue=None, index2x=False)
+convert(df, x="x", y="y", hue=None, index2x=False)
 ```
+column方向に複数のインデックスがあるものを縦長のプロットできる形式に変換する関数．  
+内部的には，`pd.melt`を使用して変換しています．  
 
+|            |          | 説明                                                                            |
+| ---------- | -------- | ------------------------------------------------------------------------------- |
+| `df`      | Required | 変換対象のデータフレーム    |
+| `x` `y` | Option | X,Y軸のラベル文字，上記の図におけるxとyに対応 |
+| `hue`      | Option   | 群間を比較するときにその指標となるもの，上記の図におけるhueに対応              |
+| `index2x`  | Option   | データフレームのindexをx軸の要素として使用する時にTrueを指定する |
 
+### 色の取得
 ``` Python
-get_color(name: Literal["BR", "BG", "KW", "C3", "C5"] = "BR")
+get_color(name: Literal["BR", "BG", "KW", "C3", "C5", "pastel", "vivid"] = "BR")
 ```
+プロット用のカラーパレット．色の詳細については，以下の図を参照
+
+#### BR
+~~~ Python
+plot.bar(df, "pic/BR", color=color)
+~~~
+![BR](pic/BR.png "BR")
+#### BG
+~~~ Python
+plot.bar(df, "pic/BG", color=color)
+~~~
+![BG](pic/BG.png "BG")
+#### KW
+~~~ Python
+plot.bar(df, "pic/KW", color=color)
+~~~
+![KW](pic/KW.png "KW")
+#### C3
+~~~ Python
+plot.bar(df, "pic/C3", color=color)
+~~~
+![C3](pic/C3.png "C3")
+#### C5
+~~~ Python
+plot.bar(df, "pic/C5", color=color)
+~~~
+![C5](pic/C5.png "C5")
+#### pastel
+~~~ Python
+plot.bar(df, "pic/pastel", color=color)
+~~~
+![pastel](pic/pastel.png "pastel")
+#### vivid
+~~~ Python
+plot.bar(df, "pic/vivid", color=color)
+~~~
+![vivid](pic/vivid.png "vivid")
