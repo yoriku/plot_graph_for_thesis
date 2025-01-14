@@ -4,7 +4,7 @@ import pandas as pd
 
 if __name__ == "__main__":
     from sklearn.datasets import make_classification
-    X, y= make_classification(n_samples=100, n_features=4, n_redundant=1, n_informative=3, n_classes=4, random_state=0)
+    X, y= make_classification(n_samples=100, n_features=5, n_redundant=1, n_informative=4, n_classes=5, random_state=0)
     df = pd.DataFrame(X)
     df["target"] = y
 
@@ -13,7 +13,7 @@ if __name__ == "__main__":
     df = plot.convert(df, hue="target")
     color = plot.get_color("C5")
 
-    plot.box(df, "pic/adjust", hue="target", color=color, stats={"adjust_name": "holm"})
+    plot.box(df, "pic/adjust", hue="target", color=color)
 
     # # iris dataset
     # df = pd.read_csv("https://gist.githubusercontent.com/netj/8836201/raw/6f9306ad21398ea43cba4f7d537619d0e07d5ae3/iris.csv")

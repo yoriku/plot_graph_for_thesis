@@ -109,9 +109,6 @@ class Stat:
         c_hues = self.sort(l_hues)
 
         l_p = []
-        print(df[hue])
-        print(hues)
-        print(xs)
 
         for i, name_x in enumerate(xs):
             for i1, i2 in c_hues:
