@@ -10,10 +10,10 @@ if __name__ == "__main__":
 
     plot = PLOT(save_mode=["png"], figsize=(12,8))
 
-    df = plot.convert(df, hue="target")
-    color = ["#FFB3BA", "#FFDFBA", "#FFFFBA", "#BAFFC9"]
+    df = plot.convert(df, hue="target", x="features", y="number")
+    color = plot.get_color("pastel")
 
-    plot.box(df, "pic/adjust", hue="target", yticks=[-5,0,5,10], color=color)
+    plot.box(df, "pic/adjust", x="features", y="number", hue="target", yticks=[-5,0,5], color=color)
 
     # iris dataset
     df = pd.read_csv("https://gist.githubusercontent.com/netj/8836201/raw/6f9306ad21398ea43cba4f7d537619d0e07d5ae3/iris.csv")
@@ -25,7 +25,7 @@ if __name__ == "__main__":
 
     plot.bar(df, "pic/bar", hue="variety", color=color)
     plot.box(df, "pic/box", hue="variety", color=color, stats={"stat_name": "welch", "stat_mark": None}, figsize=(20,8))
-    plot.box(df, "pic/box-", hue="variety", color=color, kind="-")
+    plot.box(df, "pic/box-", hue="variety", color=color, kind="-", figsize=(12,8))
 
 
     ave =np.array([[100,4],[10,200]])

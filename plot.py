@@ -227,8 +227,8 @@ class PLOT:
         hue_order = None
         if hue is not None:
             hue_order = get_unigue(df, hue, sort=True)
+            df[hue] = df[hue].astype(str)
         df[x] = df[x].astype(str)
-        df[hue] = df[hue].astype(str)
         
         if kind !="|":
             x, y = y, x
@@ -316,8 +316,8 @@ class PLOT:
         hue_order = None
         if hue is not None:
             hue_order = get_unigue(df, hue, sort=True)
+            df[hue] = df[hue].astype(str)
         df[x] = df[x].astype(str)
-        df[hue] = df[hue].astype(str)
         
         if kind !="|":
             x, y = y, x
@@ -429,24 +429,25 @@ class PLOT:
         if ret:
             cv2.imwrite(result_path, frame)
     
-    def convert(self, df, hue=None, index2x=False):
+    def convert(self, df, x="x", y="y", hue=None, index2x=False):
         if index2x:
             df["x"] = df.index
             if hue is not None:
-                df = pd.melt(df, id_vars="x", var_name="hue", value_name="y")
+                df = pd.melt(df, id_vars=x, var_name="hue", value_name=y)
         else:
             if hue is not None:
-                df = pd.melt(df, id_vars=hue, var_name="x", value_name="y")
+                df = pd.melt(df, id_vars=hue, var_name=x, value_name=y)
             else:
-                df = pd.melt(df, var_name="x", value_name="y")
+                df = pd.melt(df, var_name=x, value_name=y)
         return df
     
-    def get_color(self, name: Literal["BR", "BG", "KW", "C3", "C5"] = "BR"):
+    def get_color(self, name: Literal["BR", "BG", "KW", "C3", "C5", "pastel"] = "BR"):
         BR = ["#0066CC", "#FF0000"]
         BG = ["#010066", "#19B900"]
         KW = ["#333333", "#AAAAAA"]
         C3 = ["#ff7f00", "#19B900", "#0066CC"]
         C5 = ["#010066", "#19B900", "#333333", "#ff7f00", "#e41a1c"]
+        pastel = ["#ff7f7f", "#ff7fff", "#7f7fff", "#7fffff", "#7fff7f", "#ffff7f"]
         return eval(name)
 
 if __name__ == "__main__":
