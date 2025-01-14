@@ -28,7 +28,7 @@ class Annot:
         for s,e,l,text in points:
             if text != "":
                 h = self.max_h + self.get(l)
-                ax.plot([s,e], [h, h], color="black")
+                ax.plot([s,e], [h, h], color="black", clip_on=False)
                 ax.text((s+e)/2, h + self.get(1), text, color="black", horizontalalignment='center', fontsize=self.fs)
         return ax
 
