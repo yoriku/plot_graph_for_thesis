@@ -20,7 +20,7 @@ class Annot:
         self.p_miny, self.p_maxy = p_miny / dpp, p_maxy / dpp
 
     def get(self, level):
-        level += 0.5
+        level -= 0.5
         font_height = self.fspx * (self.origin_ax_max_y - self.origin_ax_min_y) / (self.p_maxy - self.p_miny)
         return font_height * level
     
@@ -29,7 +29,7 @@ class Annot:
             if text != "":
                 h = self.max_h + self.get(l)
                 ax.plot([s,e], [h, h], color="black")
-                ax.text((s+e)/2, h + self.get(0), text, color="black", horizontalalignment='center', fontsize=self.fs)
+                ax.text((s+e)/2, h + self.get(1), text, color="black", horizontalalignment='center', fontsize=self.fs)
         return ax
 
 

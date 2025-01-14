@@ -1,7 +1,14 @@
 # 概要 Overview
-直接論文やスライドに貼れるレベルの図を簡単に作成できるツール群  
-A suite of tools that make it easy to create diagrams at a level that can be put directly on papers and slides.  
-
+直接論文やスライドに貼れるレベルの図を簡単に作成できるツール群．統計的検定も同時に行い結果を描画することができます．  
+A suite of tools that make it easy to create diagrams at a level that can be put directly on papers and slides. Statistical tests can be performed simultaneously and the results can be plotted.  
+  
+こんな感じの図を次のプログラムで表示することができます．  
+~~~ Python
+plot = PLOT(save_mode=["png"], figsize=(12,8))
+df = plot.convert(df, hue="target")
+plot.box(df, "pic/adjust", hue="target", yticks=[-5,0,5,10])
+~~~
+![adjust](pic/adjust.png "例")
 
 # APIs
 
@@ -43,8 +50,8 @@ box(df, filename, figsize=None, kind="|",
 | `color`    | Option   | BOXの色。`hue=None` の時は1つの色コードを指定したリストを、`hue` が持つ変数の数分の色コードを指定したリストを渡す。デフォルトでは `hue=2` の場合に使用可能<br>Color of the box. If `hue=None`, provide a list of one color code. Otherwise, provide a list of color codes corresponding to the number of hue variables. By default, it works for `hue=2`. |
 | `y_const`  | Option   | 基準となる横線を引くときに基準値の数値を指定<br>Specify a numeric value for drawing a reference horizontal line                                                                                                                                                                                                                                           |
 | `yticks`   | Option   | y軸のメモリのリストを指定（例: `[0,1,2]`）<br>List of y-axis ticks (e.g., `[0,1,2]`)                                                                                                                                                                                                                                                                      |
-| `rotation` | Option   | X軸のメモリラベルの角度<br>Rotation angle for x-axis tick labels |
-|`stats`|Option  |`stat_name`は検定の名前`brunnermunzel`と`welch`をサポート<br>`stat_mark`は星の形状の定義．デフォルトは`*`であり，Noneを指定するとp値がそのまま表示される<br>`adjust_name`は多重比較の方法を定義，有名どころでは，`bonferroni`，`holm`，`fdr_bh`などが可能|
+| `rotation` | Option   | X軸のメモリラベルの角度<br>Rotation angle for x-axis tick labels                                                                                                                                                                                                                                                                                          |
+| `stats`    | Option   | `stat_name`は検定の名前`brunnermunzel`と`welch`をサポート<br>`stat_mark`は星の形状の定義．デフォルトは`*`であり，Noneを指定するとp値がそのまま表示される<br>`adjust_name`は多重比較の方法を定義，有名どころでは，`bonferroni`，`holm`，`fdr_bh`などが可能                                                                                                 |
 
 
 
@@ -96,8 +103,8 @@ bar(df, filename, figsize=None,
 | `y_const`  | Option   | 基準となる横線を引くときに基準値の数値を指定<br>Specify a numeric value for drawing a reference horizontal line                                                                                                                                                                                                                                           |
 | `xticks`   | Option   | x軸のメモリのリストを指定（例: `[0,1,2]`）<br>List of x-axis ticks (e.g., `[0,1,2]`)                                                                                                                                                                                                                                                                      |
 | `yticks`   | Option   | y軸のメモリのリストを指定（例: `[0,1,2]`）<br>List of y-axis ticks (e.g., `[0,1,2]`)                                                                                                                                                                                                                                                                      |
-| `rotation` | Option   | X軸のメモリラベルの角度<br>Rotation angle for x-axis tick labels  |
-|`stats`|Option  |`stat_name`は検定の名前`brunnermunzel`と`welch`をサポート<br>`stat_mark`は星の形状の定義．デフォルトは`*`であり，Noneを指定するとp値がそのまま表示される<br>`adjust_name`は多重比較の方法を定義，有名どころでは，`bonferroni`，`holm`，`fdr_bh`などが可能|
+| `rotation` | Option   | X軸のメモリラベルの角度<br>Rotation angle for x-axis tick labels                                                                                                                                                                                                                                                                                          |
+| `stats`    | Option   | `stat_name`は検定の名前`brunnermunzel`と`welch`をサポート<br>`stat_mark`は星の形状の定義．デフォルトは`*`であり，Noneを指定するとp値がそのまま表示される<br>`adjust_name`は多重比較の方法を定義，有名どころでは，`bonferroni`，`holm`，`fdr_bh`などが可能                                                                                                 |
 
 #### Exaple figures
 ~~~ Python
