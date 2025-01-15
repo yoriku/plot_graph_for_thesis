@@ -417,6 +417,7 @@ class PLOT:
         fig = self.save(fig, filename)
 
         plt.cla()
+        self.fig, self.ax = self.delete_fig().update_fig(self.figsize)
 
     def movie2frame(video_path, frame_num=0, result_path="cut.png"):
         import cv2
